@@ -2,73 +2,37 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puissance 4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style/style.css">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      color: rgb(0, 0, 0);
-      background: transparent;
-    }
-
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-      filter: brightness(0.6);
-      display: block;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      color: white;
-    }
-
-    h1 {
-      font-size: 4rem;
-      margin-top: 100px;
-      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-    }
-
-    .home-button {
-      padding: 20px 50px;
-      font-size: 1.8rem;
-      border-radius: 12px;
-      border: none;
-      background-color: rgba(255, 255, 255, 0.2);
-      color: white;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .home-button:hover {
-      background-color: rgba(255, 255, 255, 0.5);
-      transform: scale(1.05);
-    }
-  </style>
 </head>
 <body>
 
- 
-  <img src="/static/mongif.gif" id="bg-video" alt="Fond animé">
+<!-- Animated background elements -->
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
-  <div class="content">
-    <h1>Bienvenue sur Puissance 4</h1>
+<!-- Floating Chips -->
+<div class="floating-chip c-red chip-1"></div>
+<div class="floating-chip c-yellow chip-2"></div>
+<div class="floating-chip c-red chip-3"></div>
+<div class="floating-chip c-yellow chip-4"></div>
+<div class="floating-chip c-red chip-5"></div>
+<div class="floating-chip c-yellow chip-6"></div>
 
-    <form action="/game" method="get">
-      <button class="home-button">Jouer</button>
+<div class="home-container">
+  <div class="home-card">
+    <h1>Puissance 4</h1>
+    <p>Re-découvrez le jeu classique dans un univers doux, vibrant et pastel.</p>
+    <form action="/start" method="POST" class="name-form">
+      <input type="text" name="p1" placeholder="Prénom Joueur 1 (Rouge)" required class="name-input p1-input">
+      <input type="text" name="p2" placeholder="Prénom Joueur 2 (Jaune)" required class="name-input p2-input">
+      <button type="submit" class="play-button">Lancer une partie</button>
     </form>
   </div>
+</div>
 
 </body>
 </html>

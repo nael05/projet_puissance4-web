@@ -11,9 +11,11 @@ import (
 )
 
 var (
-	board  [6][7]string
-	turn   = "R"
-	winner string
+	board       [6][7]string
+	turn        = "R"
+	winner      string
+	player1Name = "Joueur Rouge"
+	player2Name = "Joueur Jaune"
 )
 
 var templates = template.Must(template.ParseFiles("templates/home.html", "templates/game.html"))
@@ -51,9 +53,13 @@ func renderBoard() template.HTML {
 
 	if winner != "" {
 		sb.WriteString(fmt.Sprintf("<h2>%s</h2>", winner))
-		sb.WriteString(`<form action="/" method="GET"><button>Rejouer</button></form>`)
+		sb.WriteString(`<form action="/" method="GET"><button style="margin-top:20px;">Rejouer</button></form>`)
 	} else {
-		sb.WriteString(fmt.Sprintf("<p>Tour de : %s</p>", turn))
+		currentPlayer := player1Name
+		if turn == "J" {
+			currentPlayer = player2Name
+		}
+		sb.WriteString(fmt.Sprintf("<p>Tour de : %s</p>", currentPlayer))
 	}
 	return template.HTML(sb.String())
 }
@@ -69,6 +75,25 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		resetBoard()
 	}
 	templates.ExecuteTemplate(w, "home.html", nil)
+}
+
+func startHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		p1 := r.FormValue("p1")
+		p2 := r.FormValue("p2")
+		if p1 != "" {
+			player1Name = p1
+		} else {
+			player1Name = "Joueur Rouge"
+		}
+		if p2 != "" {
+			player2Name = p2
+		} else {
+			player2Name = "Joueur Jaune"
+		}
+	}
+	resetBoard()
+	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
 func gameHandler(w http.ResponseWriter, r *http.Request) {
@@ -144,9 +169,9 @@ func playHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if checkWin(turn) {
 		if turn == "R" {
-			winner = "Le joueur Rouge a gagné ! 🎉"
+			winner = player1Name + " a gagné ! 🎉"
 		} else {
-			winner = "Le joueur Jaune a gagné ! 🎉"
+			winner = player2Name + " a gagné ! 🎉"
 		}
 	} else if isBoardFull() {
 		winner = "Match nul : la grille est remplie 🎯"
@@ -165,6 +190,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	http.HandleFunc("/", homeHandler)
+	http.HandleFunc("/start", startHandler)
 	http.HandleFunc("/game", gameHandler)
 	http.HandleFunc("/play", playHandler)
 

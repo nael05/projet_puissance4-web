@@ -2,209 +2,25 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Puissance 4 - Jeu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style/style.css">
-  <style>
-    body {
-      font-family: "Poppins", Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      color: #fff;
-      background-color: #0d1117;
-      overflow-x: hidden;
-    }
-
-    h1 {
-      margin-top: 40px;
-      font-size: 3rem;
-      text-shadow: 0 0 15px rgba(0,0,0,0.7);
-      z-index: 2;
-      position: relative;
-    }
-
-    #board {
-      margin: 40px auto;
-      display: inline-block;
-      padding: 20px;
-      border-radius: 20px;
-      background: rgba(0, 119, 182, 0.35);
-      backdrop-filter: blur(6px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-      z-index: 2;
-      position: relative;
-    }
-
-    #bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 110%;
-      height: 110%;
-      object-fit: cover;
-      filter: brightness(0.5) blur(2px);
-      z-index: -2;
-      animation: float 15s ease-in-out infinite alternate;
-    }
-
-    @keyframes float {
-      0% { transform: scale(1.05) translateY(0); }
-      100% { transform: scale(1.1) translateY(-15px); }
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: -1;
-    }
-
-    h2, p {
-      font-size: 1.5rem;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-    }
-
-    form button {
-      padding: 10px 25px;
-      font-size: 1.2rem;
-      border-radius: 12px;
-      border: none;
-      background-color: rgba(255,255,255,0.2);
-      color: white;
-      backdrop-filter: blur(4px);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    form button:hover {
-      background-color: rgba(255,255,255,0.5);
-    }
-
-    /* 🎆 Feu d’artifice */
-    #fireworks {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 10;
-      display: none;
-    }
-
-    .firework {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      background: transparent;
-      border-radius: 50%;
-      animation: explode 1.5s ease-out forwards;
-    }
-
-    @keyframes explode {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(3) translateY(-50px);
-        opacity: 0;
-      }
-    }
-.fireworks {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 999;
-}
-
-.explosion {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: transparent;
-  border-radius: 50%;
-  animation: launch 1.8s ease-out infinite;
-}
-
-.explosion:nth-child(1) { left: 20%; animation-delay: 0.3s; }
-.explosion:nth-child(2) { left: 40%; animation-delay: 0.6s; }
-.explosion:nth-child(3) { left: 60%; animation-delay: 0.9s; }
-.explosion:nth-child(4) { left: 80%; animation-delay: 1.2s; }
-.explosion:nth-child(5) { left: 50%; animation-delay: 0s; }
-
-@keyframes launch {
-  0% {
-    transform: translateY(100%);
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(20%);
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-    box-shadow:
-      0 0 8px #ff0,
-      0 0 15px #f0f,
-      0 0 30px #0ff,
-      0 0 45px #f00;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 0;
-    box-shadow: none;
-  }
-}
-
-.explosion::before,
-.explosion::after {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: radial-gradient(circle, #fff, transparent);
-  border-radius: 50%;
-  opacity: 0;
-  animation: sparkle 1.8s ease-out infinite;
-}
-
-.explosion::before {
-  top: -10px;
-  left: -10px;
-  animation-delay: 0.2s;
-}
-
-.explosion::after {
-  top: -10px;
-  right: -10px;
-  animation-delay: 0.4s;
-}
-
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.2); }
-  50% { opacity: 1; transform: scale(1.6); }
-}
-
-  </style>
 </head>
 <body>
-  <video autoplay muted loop id="bg-video" playsinline preload="auto">
-    <source src="/static/background.mp4" type="video/mp4">
-  </video>
 
-  <div class="overlay"></div>
+  <!-- Animated background elements -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Floating Chips -->
+  <div class="floating-chip c-red chip-1"></div>
+  <div class="floating-chip c-yellow chip-2"></div>
+  <div class="floating-chip c-red chip-3"></div>
+  <div class="floating-chip c-yellow chip-4"></div>
+  <div class="floating-chip c-red chip-5"></div>
+  <div class="floating-chip c-yellow chip-6"></div>
 
   <h1>Puissance 4</h1>
 
@@ -212,40 +28,5 @@
     {{.BoardHTML}}
   </div>
 
-  <div id="fireworks"></div>
-
-  <script>
-    const winnerText = document.querySelector('h2');
-    if (winnerText && winnerText.textContent.includes('gagné')) {
-      startFireworks();
-    }
-
-    function startFireworks() {
-      const container = document.getElementById('fireworks');
-      container.style.display = 'block';
-
-      const colors = ['#ff3b3b', '#ffd93b', '#3bffec', '#8d3bff', '#3bff5e'];
-      for (let i = 0; i < 50; i++) {
-        const fw = document.createElement('div');
-        fw.classList.add('firework');
-        fw.style.left = Math.random() * 100 + '%';
-        fw.style.top = Math.random() * 100 + '%';
-        fw.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        fw.style.animationDelay = (Math.random() * 1) + 's';
-        container.appendChild(fw);
-        setTimeout(() => fw.remove(), 2000);
-      }
-
-      setTimeout(() => {
-        if (document.querySelector('h2')) startFireworks();
-      }, 2000);
-    }
-  </script>
-<div class="fireworks">
-  <div class="explosion"></div>
-  <div class="explosion"></div>
-  <div class="explosion"></div>
-  <div class="explosion"></div>
-  <div class="explosion"></div>
 </body>
 </html>
